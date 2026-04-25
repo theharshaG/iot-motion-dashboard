@@ -1,0 +1,33 @@
+#IoT Dashboard 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PIR Dashboard</title>
+</head>
+<body>
+
+<h1>Motion Status</h1>
+<h2 id="status">Loading...</h2>
+
+<script>
+async function loadData() {
+    let res = await fetch('/data');
+    let data = await res.json();
+
+    if (data.length > 0) {
+        let latest = data[0];
+
+        if (latest.motion == 1) {
+            document.getElementById("status").innerHTML = "🚨 Motion Detected";
+        } else {
+            document.getElementById("status").innerHTML = "✅ No Motion";
+        }
+    }
+}
+
+setInterval(loadData, 2000);
+</script>
+
+</body>
+</html>
